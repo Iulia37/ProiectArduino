@@ -1,74 +1,4 @@
-#include <LedControl.h>
-#include <LiquidCrystal.h>
-#include <EEPROM.h>
-
-extern LiquidCrystal lcd;
-extern LedControl lc;
-
-extern bool board[8][8];
-
-struct led_matrice {
-  int lin, col;
-};
-
-extern led_matrice snake[70];
-extern led_matrice secventa[101];
-
-extern int head;
-extern int top;
-extern int sunet;
-extern int viteza;
-extern bool viteza_selectata;
-extern int pozitie_viteza;
-
-extern int highScore;
-
-extern const int SW_pin;
-extern const int X_pin;
-extern const int Y_pin;
-
-extern unsigned long ultimaMiscare;
-extern int directie;
-extern int dl[4];
-extern int dc[4];
-
-extern bool este_mar;
-extern led_matrice mar;
-extern led_matrice mutare;
-
-extern bool game_over;
-extern int score;
-
-extern int joc;
-extern bool joc_ales;
-extern bool repetare;
-extern int cnt_miscari;
-extern bool initializare_joc;
-
-bool validare(int lin, int col)
-{
-  for(int i = 0; i <= head; i++)
-  {
-    if(snake[i].lin == lin && snake[i].col == col)
-    {
-      return false;
-    }
-  }
-  return true;
-}
-
-void afisare()
-{
-  for (int row = 0; row < 8; row++) 
-  {
-      for (int col = 0; col < 8; col++) 
-      {
-        lc.setLed(0, row, col, board[row][col]);
-      }
-  }
-}
-
-void startGame()
+void startSnakeGame()
 {
     tone(sunet, 500, 100);
     delay(120);
@@ -102,7 +32,18 @@ void startGame()
       }
     }
     board[4][0] = board[4][1] = 1;
+}
 
+bool validare(int lin, int col)
+{
+  for(int i = 0; i <= head; i++)
+  {
+    if(snake[i].lin == lin && snake[i].col == col)
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 void mar_spawn()
@@ -246,7 +187,7 @@ void SNAKE()
       
     if(game_over) 
     {
-      startGame();
+      startSnakeGame();
     }
 
     if(!game_over)
@@ -295,3 +236,4 @@ void SNAKE()
       }
     }
 }
+
