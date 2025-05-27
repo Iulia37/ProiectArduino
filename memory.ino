@@ -1,3 +1,6 @@
+#include "memory.h"
+#include <Arduino.h>
+
 void startMemoryGame()
 {
   initializare_joc = true;
@@ -31,17 +34,6 @@ void startMemoryGame()
 
 }
 
-void sterge()
-{
-  for(int i = 0; i < 8; i++)
-  {
-    for(int j = 0; j < 8; j++)
-    {
-      board[i][j] = 0;
-    }
-  }
-}
-
 void afisare_chenar(led_matrice led)
 {
   for(int i = 0; i < 4; i++)
@@ -52,6 +44,69 @@ void afisare_chenar(led_matrice led)
     }
   }
   afisare();
+}
+
+void afisare_secventa_chenare()
+{
+  int next = random(1, 5); // generaz urmatorul chenar
+  switch(next) 
+  {
+    case 1: 
+      secventa[top].lin = secventa[top].col = 0;
+      break;
+    case 2: 
+      secventa[top].lin = 0; secventa[top].col = 4;
+      break;
+    case 3: 
+      secventa[top].lin = 4; secventa[top].col = 0; 
+      break;
+    case 4: 
+      secventa[top].lin = secventa[top].col = 4;
+      break;
+    }
+    top++;
+
+    for(int i = 0; i < top; i++)  // afisez secevnta de repetat
+    {
+      sterge();
+      afisare();
+      delay(300);
+      afisare_chenar(secventa[i]);
+      tone(sunet, 1000, 150);
+      delay(1000);
+    }
+}
+
+void memoryGameOver()
+{
+  tone(sunet, 400, 200);
+  delay(250);
+  tone(sunet, 200, 300);
+  game_over = true;
+  lcd.clear();
+  lcd.setCursor(4, 0);
+  lcd.print("Game Over");
+  lcd.setCursor(4, 1);
+  lcd.print("Score: ");
+  lcd.setCursor(11, 1);
+  lcd.print(score);
+  repetare = false;
+  initializare_joc = false;
+
+  if(score > highScore)
+  {
+    EEPROM.put(2, score);
+    highScore = score;
+  }
+
+  while(1)
+  {
+    if(digitalRead(SW_pin) == LOW)
+    {
+      joc_ales = false;
+      break;
+    }
+  }
 }
 
 void MEMORY()
@@ -65,34 +120,9 @@ void MEMORY()
   { 
     if(!repetare)
     {
-      int next = random(1, 5); // generaz urmatorul chenar
-      switch(next) 
-      {
-        case 1: 
-            secventa[top].lin = secventa[top].col = 0;
-            break;
-        case 2: 
-            secventa[top].lin = 0; secventa[top].col = 4;
-            break;
-        case 3: 
-            secventa[top].lin = 4; secventa[top].col = 0; 
-            break;
-        case 4: 
-            secventa[top].lin = secventa[top].col = 4;
-            break;
-      }
-      top++;
+      afisare_secventa_chenare();
 
-      for(int i = 0; i < top; i++)  // afisez secevnta de repetat
-      {
-        sterge();
-        afisare();
-        delay(300);
-        afisare_chenar(secventa[i]);
-        tone(sunet, 1000, 150);
-        delay(1000);
-      }
-      repetare = true;
+      repetare = true; // marcam ca s-a afisat secventa
       cnt_miscari = 0;
       mutare.lin = mutare.col = 0;
 
@@ -134,34 +164,7 @@ void MEMORY()
         }
         else
         {
-          tone(sunet, 400, 200);
-          delay(250);
-          tone(sunet, 200, 300);
-          game_over = true;
-          lcd.clear();
-          lcd.setCursor(4, 0);
-          lcd.print("Game Over");
-          lcd.setCursor(4, 1);
-          lcd.print("Score: ");
-          lcd.setCursor(11, 1);
-          lcd.print(score);
-          repetare = false;
-          initializare_joc = false;
-
-          if(score > highScore)
-          {
-            EEPROM.put(2, score);
-            highScore = score;
-          }
-
-          while(1)
-          {
-            if(digitalRead(SW_pin) == LOW)
-            {
-              joc_ales = false;
-              break;
-            }
-          }
+          memoryGameOver();
         }
       }
 

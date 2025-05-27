@@ -1,3 +1,6 @@
+#include "snake.h"
+#include <Arduino.h>
+
 void startSnakeGame()
 {
     tone(sunet, 500, 100);
@@ -60,6 +63,27 @@ void mar_spawn()
     board[mar.lin][mar.col] = 1;
 }
 
+void snakeGameOver()
+{
+  tone(sunet, 400, 200);
+  delay(250);
+  tone(sunet, 200, 300);
+  game_over = true;
+  lcd.clear();
+  lcd.setCursor(4, 0);
+  lcd.print("Game Over");
+  lcd.setCursor(4, 1);
+  lcd.print("Score: ");
+  lcd.setCursor(11, 1);
+  lcd.print(score);
+  viteza_selectata = false;
+  if(score > highScore)
+  {
+    EEPROM.put(0, score);
+    highScore = score;
+  }
+}
+
 void miscare()
 {
     ultimaMiscare = millis();
@@ -69,23 +93,7 @@ void miscare()
 
     if(!validare(nouLin, nouCol))
     {
-      tone(sunet, 400, 200);
-      delay(250);
-      tone(sunet, 200, 300);
-      game_over = true;
-      lcd.clear();
-      lcd.setCursor(4, 0);
-      lcd.print("Game Over");
-      lcd.setCursor(4, 1);
-      lcd.print("Score: ");
-      lcd.setCursor(11, 1);
-      lcd.print(score);
-      viteza_selectata = false;
-      if(score > highScore)
-      {
-        EEPROM.put(0, score);
-        highScore = score;
-      }
+      snakeGameOver();
     }
     else
     {
