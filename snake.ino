@@ -141,7 +141,7 @@ void selectare_viteza()
 
   while(!viteza_selectata)
   {
-    if(analogRead(X_pin) >= 1000)
+    if(analogRead(X_pin) >= 900)
     {
       if(pozitie_viteza != 1)
       {
@@ -155,7 +155,7 @@ void selectare_viteza()
         delay(200);
       }
     }
-    else if(analogRead(X_pin) <= 50) 
+    else if(analogRead(X_pin) <= 150) 
     {
       if(pozitie_viteza != 2)
       {
@@ -207,22 +207,22 @@ void SNAKE()
 
       afisare();
 
-      if(analogRead(Y_pin) >= 1000 && directie != 3)
+      if(analogRead(Y_pin) >= 900 && directie != 3)
       {
         directie = 1; //sus
       }
 
-      if(analogRead(Y_pin) <= 40 && directie != 1)
+      if(analogRead(Y_pin) <= 150 && directie != 1)
       {
         directie = 3; //jos
       }
 
-      if(analogRead(X_pin) <= 40 && directie != 2)
+      if(analogRead(X_pin) <= 150 && directie != 2)
       {
         directie = 0; //dreapta
       }
 
-      if(analogRead(X_pin) >= 1000 && directie != 0)
+      if(analogRead(X_pin) >= 900 && directie != 0)
       {
         directie = 2; //stanga
       }

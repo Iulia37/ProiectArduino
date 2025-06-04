@@ -33,7 +33,7 @@ void alege_joc()
 
   while(!joc_ales)
   {
-    if(analogRead(X_pin) >= 1000)
+    if(analogRead(X_pin) >= 900)
     {
       if(joc != 1)
       {
@@ -47,7 +47,7 @@ void alege_joc()
         delay(200);
       }
     }
-    else if(analogRead(X_pin) <= 50) 
+    else if(analogRead(X_pin) <= 150) 
     {
       if(joc != 2)
       {

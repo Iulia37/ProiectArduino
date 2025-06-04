@@ -134,22 +134,22 @@ void MEMORY()
     {
       sterge();
       afisare_chenar(mutare);
-      if(analogRead(Y_pin) >= 1000)
+      if(analogRead(Y_pin) >= 900)
       {
         mutare.lin = 0;
       }
 
-      if(analogRead(Y_pin) <= 40)
+      if(analogRead(Y_pin) <= 150)
       {
         mutare.lin = 4;
       }
 
-      if(analogRead(X_pin) <= 40)
+      if(analogRead(X_pin) <= 150)
       {
         mutare.col = 4;
       }
 
-      if(analogRead(X_pin) >= 1000)
+      if(analogRead(X_pin) >= 900)
       {
         mutare.col = 0;
       }
