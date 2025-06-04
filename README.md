@@ -1,4 +1,4 @@
-# 🎮 Proiect Arduino: Consolă de Jocuri Retro
+# 🎮 Proiect Arduino: Consolă de Jocuri
 
 Acest proiect este o consolă simplă realizată cu Arduino, unde poți juca două jocuri clasice: **Snake** și **Memory**
 
@@ -9,7 +9,7 @@ Acest proiect este o consolă simplă realizată cu Arduino, unde poți juca dou
 Structura proiectului este organizată în fișiere separate pentru o mai bună modularitate și întreținere:
 
 - `ConsolaJocuri.ino`: Fișierul principal care gestionează logica generală a consolei.
-- `functii_comune.ino`: Conține funcții utilizate în ambele jocuri, precum afișarea meniului și gestionarea intrărilor de la butoane.
+- `functii_comune.ino`: Conține funcții utilizate în ambele jocuri,
 - `snake.ino` & `snake.h`: Implementarea completă a jocului Snake.
 - `memory.ino` & `memory.h`: Implementarea completă a jocului Memory.
 
